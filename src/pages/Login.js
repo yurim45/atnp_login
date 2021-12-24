@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import ButtonBlue from "../common/components/ButtonBlue";
+import ButtonWhite from "../common/components/ButtonWhite";
 import Input from "../common/components/Input";
-import { flexSet } from "../styles/variable";
+import { flexSet, formSet } from "../styles/variable";
 
 const LoginInfo = [
   {
@@ -19,6 +22,8 @@ const LoginInfo = [
 ];
 
 const Login = () => {
+  const navigation = useNavigate();
+
   return (
     <LoginForm>
       <main>
@@ -39,7 +44,22 @@ const Login = () => {
                   />
                 );
               })}
+              <footer>
+                <ButtonBlue
+                  label={"로그인"}
+                  onClick={() => {
+                    navigation("/signupEmail");
+                  }}
+                />
+                <div>또는</div>
+              </footer>
             </form>
+            <ButtonWhite
+              label={"회원가입"}
+              onClick={() => {
+                navigation("/signupEmail");
+              }}
+            />
           </div>
         </div>
       </main>
@@ -51,6 +71,7 @@ export default Login;
 
 const LoginForm = styled.section`
   ${flexSet("center", "center")};
+  background-color: ${({ theme }) => theme.colors.lightGray};
 
   main {
     max-width: 1440px;
@@ -58,34 +79,43 @@ const LoginForm = styled.section`
 
     .wrap {
       ${flexSet("center", "center")};
-
       height: 100%;
 
       .loginBox {
-        width: 540px;
-        padding: 40px;
-        background-color: rgb(255, 255, 255);
-        border-radius: 12px;
-        box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
+        ${formSet};
 
         .title {
-          margin-bottom: 15px;
+          margin-top: 36px;
+          margin-bottom: 36px;
           text-align: center;
 
           h1 {
-            margin-bottom: -5px;
-            font-size: 2.5rem;
+            margin-bottom: 18px;
+            font-size: 2.4rem;
+            font-weight: 800;
             color: ${({ theme }) => theme.colors.black};
           }
 
           p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: ${({ theme }) => theme.colors.deepGray};
           }
         }
 
         form {
           margin-top: 40px;
+
+          footer {
+            margin-top: 36px;
+
+            div {
+              ${flexSet("center", "center")};
+              margin-top: 15px;
+              margin-bottom: 10px;
+              font-size: 0.9rem;
+              color: ${({ theme }) => theme.colors.blue};
+            }
+          }
         }
       }
     }

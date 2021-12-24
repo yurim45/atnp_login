@@ -13,15 +13,15 @@ export default Input;
 
 const InputWrap = styled.div`
   position: relative;
-  margin: 18px 0px;
+  margin: 16px 0px;
   width: 100%;
 
   input {
     border-radius: 5px;
-    height: 30px;
-    width: 95%;
-    font-size: 1rem;
-    padding: 14px;
+    height: 54px;
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 12px;
     border: 1px solid rgb(221, 221, 221);
 
     :focus {
