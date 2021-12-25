@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { debounce } from "lodash";
 import { flexSet } from "../../styles/variable";
 
-const Input = ({ type, desc, name }) => {
-  const [inputValue, setInputValue] = useState();
+const Input = ({ type, desc, name, onChange, inputValue }) => {
   const [notice, setNotice] = useState("");
-
-  const handleInputValue = debounce((value) => {
-    setInputValue(value);
-  }, 200);
 
   const isValid = () => {
     switch (name) {
@@ -29,7 +23,6 @@ const Input = ({ type, desc, name }) => {
         } else {
           setNotice("");
         }
-
       case "password":
         if (inputValue?.length < 1) {
           setNotice("비밀번호를 입력해주세요");
@@ -53,6 +46,7 @@ const Input = ({ type, desc, name }) => {
     if (inputValue) {
       isValid();
     }
+    console.log(inputValue);
   }, [inputValue]);
 
   return (
@@ -62,7 +56,7 @@ const Input = ({ type, desc, name }) => {
         placeholder={desc}
         name={name}
         onChange={(e) => {
-          handleInputValue(e.target.value);
+          onChange(e.target);
         }}
       />
       <p className='notice'>{notice}</p>

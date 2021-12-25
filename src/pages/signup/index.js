@@ -5,7 +5,7 @@ import SignupUserInfo from "./SignupUserInfo";
 import SignupEmail from "./SignupEmail";
 
 const Signup = () => {
-  const [certEmail, setCertEmail] = useState(true);
+  const [isCertEmail, setIsCertEmail] = useState(true);
 
   return (
     <SignupForm>
@@ -15,13 +15,13 @@ const Signup = () => {
             <div className='title'>
               <h1>회원가입</h1>
               <p>
-                {certEmail
+                {isCertEmail
                   ? "이메일 인증을 시작합니다. 메일이 오지 않는 경우 스팸함을 확인해주세요."
                   : "나의 정보를 입력해주세요."}
               </p>
             </div>
-            {certEmail ? (
-              <SignupEmail setCertEmail={setCertEmail} />
+            {isCertEmail ? (
+              <SignupEmail setIsCertEmail={setIsCertEmail} />
             ) : (
               <SignupUserInfo />
             )}

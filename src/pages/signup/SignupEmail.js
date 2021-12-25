@@ -1,28 +1,73 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { debounce } from "lodash";
+import { getApi } from "../../common/api/index";
 import ButtonBlue from "../../common/components/ButtonBlue";
 import ButtonWhite from "../../common/components/ButtonWhite";
 import Input from "../../common/components/Input";
-import { flexSet, formSet, description } from "../../styles/variable";
+import { flexSet, description } from "../../styles/variable";
 
-const SignupEmail = ({ setCertEmail }) => {
-  const [certNumber, setCertNumber] = useState(false);
+const SignupEmail = ({ setIsCertEmail }) => {
+  const [isCertNumber, setIsCertNumber] = useState(false);
+  const [certNumber, setCertNumber] = useState();
+  const [email, setEmail] = useState();
+  const [code, setCode] = useState();
 
-  const handleEmailSubmit = () => {
-    alert("인증코드 이메일 발송되었습니다.");
-    setCertNumber(true);
+  const handleInputValue = debounce((e) => {
+    const { name, value } = e;
+    if (name == "email") {
+      setEmail(value);
+    } else if (name == "code") {
+      setCode(value);
+    }
+  }, 200);
+
+  const handleEmailSubmit = async () => {
+    const params = {
+      email,
+    };
+    try {
+      const { status } = await getApi.post(`/email/code`, params);
+      alert("인증코드 이메일 발송되었습니다.");
+      if (status == 200) {
+        setIsCertNumber(true);
+      }
+    } catch (error) {
+      console.warn(error);
+      alert("인증코드 이메일 발송 실패했습니다.");
+    }
   };
 
-  const handleSubmit = () => {
-    alert("이메일 인증이 완료되었습니다.");
-    setCertEmail(false);
+  const handleSubmit = async () => {
+    console.log("코드 인증");
+    const params = {
+      email,
+      code,
+    };
+    console.log(params);
+    try {
+      const { status } = await getApi.patch(`/email/code`, params);
+      if (status == 200) {
+        alert("이메일 인증이 완료되었습니다.");
+        setIsCertEmail(false);
+      }
+    } catch (error) {
+      console.warn(error);
+      alert("인증코드 이메일 발송 실패했습니다.");
+    }
   };
 
   return (
     <SignupEmailForm>
       <div className='form'>
         <div className='emailWrap'>
-          <Input type='text' desc='이메일' name='email' />
+          <Input
+            type='text'
+            desc='이메일'
+            name='email'
+            onChange={handleInputValue}
+            inputValue={email}
+          />
           <ButtonWhite
             label={certNumber ? "재전송" : "전송"}
             onClick={handleEmailSubmit}
@@ -33,10 +78,16 @@ const SignupEmail = ({ setCertEmail }) => {
         본 메일은 아이디로 사용되며, 문의사항에 대한 답변을 회신받는
         이메일입니다
       </p>
-      {certNumber && (
+      {isCertNumber && (
         <div className='form'>
           <div className='emailWrap'>
-            <Input type='text' desc='인증코드를 입력해주세요.' name='code' />
+            <Input
+              type='text'
+              desc='인증코드를 입력해주세요.'
+              name='code'
+              onChange={handleInputValue}
+              inputValue={code}
+            />
             <ButtonBlue label={"인증완료"} onClick={handleSubmit} />
           </div>
           <div className='timer'>0:00</div>
@@ -55,7 +106,7 @@ const SignupEmailForm = styled.section`
       gap: 12px;
 
       button {
-        width: 95px;
+        width: 120px;
       }
     }
     .timer {
