@@ -36,7 +36,7 @@ const SignupEmail = ({ setCertEmail }) => {
       {certNumber && (
         <div className='form'>
           <div className='emailWrap'>
-            <Input type='text' desc='인증코드를 입력해주세요.' name='email' />
+            <Input type='text' desc='인증코드를 입력해주세요.' name='code' />
             <ButtonBlue label={"인증완료"} onClick={handleSubmit} />
           </div>
           <div className='timer'>0:00</div>

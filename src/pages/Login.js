@@ -6,7 +6,7 @@ import ButtonWhite from "../common/components/ButtonWhite";
 import Input from "../common/components/Input";
 import { flexSet, formSet, description } from "../styles/variable";
 
-const LoginInfo = [
+const LOGIN_INFO = [
   {
     id: 1,
     type: "text",
@@ -34,7 +34,7 @@ const Login = () => {
               <p>로그인을 위해 아래의 정보를 입력해주세요</p>
             </div>
             <form>
-              {LoginInfo?.map((info) => {
+              {LOGIN_INFO?.map((info) => {
                 return (
                   <Input
                     key={info.id}
@@ -48,7 +48,7 @@ const Login = () => {
                 <ButtonBlue
                   label={"로그인"}
                   onClick={() => {
-                    navigation("/signup");
+                    navigation("/login");
                   }}
                 />
                 <div>또는</div>
