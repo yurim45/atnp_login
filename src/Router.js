@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import SignupEmail from "./pages/signup/SignupEmail";
+import Signup from "./pages/signup/index";
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login />} />
-        <Route path='/signupEmail' element={<SignupEmail />} />
+        <Route path='/signup' element={<Signup />} />
       </Routes>
     </BrowserRouter>
   );

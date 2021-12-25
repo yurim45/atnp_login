@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const Input = ({ type, dec, name }) => {
+const Input = ({ type, desc, name }) => {
   return (
     <InputWrap>
-      <input type={type} placeholder={dec} name={name} />
+      <input type={type} placeholder={desc} name={name} />
     </InputWrap>
   );
 };

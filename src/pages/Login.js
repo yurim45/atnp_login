@@ -4,20 +4,20 @@ import styled from "styled-components";
 import ButtonBlue from "../common/components/ButtonBlue";
 import ButtonWhite from "../common/components/ButtonWhite";
 import Input from "../common/components/Input";
-import { flexSet, formSet } from "../styles/variable";
+import { flexSet, formSet, description } from "../styles/variable";
 
 const LoginInfo = [
   {
     id: 1,
     type: "text",
     name: "email",
-    dec: "이메일",
+    desc: "이메일",
   },
   {
     id: 2,
     type: "password",
     name: "password",
-    dec: "비밀번호",
+    desc: "비밀번호",
   },
 ];
 
@@ -39,7 +39,7 @@ const Login = () => {
                   <Input
                     key={info.id}
                     type={info.type}
-                    dec={info.dec}
+                    desc={info.desc}
                     name={info.name}
                   />
                 );
@@ -48,7 +48,7 @@ const Login = () => {
                 <ButtonBlue
                   label={"로그인"}
                   onClick={() => {
-                    navigation("/signupEmail");
+                    navigation("/signup");
                   }}
                 />
                 <div>또는</div>
@@ -57,7 +57,7 @@ const Login = () => {
             <ButtonWhite
               label={"회원가입"}
               onClick={() => {
-                navigation("/signupEmail");
+                navigation("/signup");
               }}
             />
           </div>
@@ -97,8 +97,7 @@ const LoginForm = styled.section`
           }
 
           p {
-            font-size: 0.9rem;
-            color: ${({ theme }) => theme.colors.deepGray};
+            ${description}
           }
         }
 
