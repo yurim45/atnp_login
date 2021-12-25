@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import ButtonBlue from "../../common/components/ButtonBlue";
 import ButtonWhite from "../../common/components/ButtonWhite";
 import Input from "../../common/components/Input";
 import { flexSet, formSet } from "../../styles/variable";
 
 const SignupEmail = () => {
+  const [certNumber, setCertNumber] = useState(false);
+  const handleSubmit = () => {
+    alert("인증코드 이메일 발송이 되었습니다.");
+    setCertNumber(true);
+  };
+
   return (
     <SignupEmailForm>
       <main>
@@ -17,16 +24,32 @@ const SignupEmail = () => {
                 확인해주세요.
               </p>
             </div>
-            <form>
+            <div className='form'>
               <div className='emailWrap'>
                 <Input type='text' dec='이메일' name='email' />
-                <ButtonWhite label={"전송"} />
+                <ButtonWhite
+                  label={certNumber ? "재전송" : "전송"}
+                  onClick={handleSubmit}
+                />
               </div>
-            </form>
+            </div>
             <p>
               본 메일은 아이디로 사용되며, 문의사항에 대한 답변을 회신받는
               이메일입니다
             </p>
+            {certNumber && (
+              <div className='form'>
+                <div className='emailWrap'>
+                  <Input
+                    type='text'
+                    dec='인증코드를 입력해주세요.'
+                    name='email'
+                  />
+                  <ButtonBlue label={"인증완료"} onClick={handleSubmit} />
+                </div>
+                <div className='timer'>0:00</div>
+              </div>
+            )}
           </div>
         </div>
       </main>
@@ -68,9 +91,7 @@ const SignupEmailForm = styled.section`
           }
         }
 
-        form {
-          margin-top: 40px;
-
+        .form {
           .emailWrap {
             ${flexSet("center", "center")};
             gap: 12px;
@@ -79,6 +100,11 @@ const SignupEmailForm = styled.section`
             button {
               width: 95px;
             }
+          }
+          .timer {
+            font-size: 0.9rem;
+            color: ${({ theme }) => theme.colors.red};
+            text-align: right;
           }
         }
 
