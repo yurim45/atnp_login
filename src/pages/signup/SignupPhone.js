@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getPhone } from "../../common/data/signup/action";
 import styled from "styled-components";
-import ButtonBlue from "../../common/components/ButtonBlue";
-import ButtonGray from "../../common/components/ButtonGray";
-import ButtonWhite from "../../common/components/ButtonWhite";
-import Input from "../../common/components/Input";
+import ButtonBlue from "../../components/ButtonBlue";
+import ButtonGray from "../../components/ButtonGray";
+import ButtonWhite from "../../components/ButtonWhite";
+import Timer from "../../components/Timer";
+import Input from "../../components/Input";
 import { flexSet, description } from "../../styles/variable";
 
 const SignupPhone = ({
@@ -16,6 +19,8 @@ const SignupPhone = ({
   handleSingup,
   handleCertPhoneSubmit,
 }) => {
+  const dispatch = useDispatch();
+
   return (
     <SignupEmailForm>
       <div className='form'>
@@ -24,7 +29,7 @@ const SignupPhone = ({
             type='text'
             desc='- 를 제와하고 핸드폰 번호를 입력해주세요'
             name='phone'
-            onChange={handleInputValue}
+            onChange={(target) => dispatch(getPhone(target))}
             inputValue={email}
           />
           <ButtonWhite
@@ -50,7 +55,7 @@ const SignupPhone = ({
               <ButtonGray label={"인증완료"} />
             )}
           </div>
-          <div className='timer'>{!isCertPhone && "0:00"}</div>
+          {!isCertPhone && <Timer />}
         </div>
       )}
       <div className='btnWrap'>

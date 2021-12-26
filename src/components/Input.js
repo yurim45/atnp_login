@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { flexSet } from "../../styles/variable";
+import { flexSet } from "../styles/variable";
+import { useDispatch, useSelector } from "react-redux";
 
 const Input = ({
   type,
@@ -13,6 +14,9 @@ const Input = ({
   pwValid,
 }) => {
   const [notice, setNotice] = useState("");
+  const userInfos = useSelector((state) => state.userInfos);
+
+  console.log(userInfos);
 
   const isValid = () => {
     switch (name) {

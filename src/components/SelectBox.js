@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
-import { flexSet } from "../../styles/variable";
+import { flexSet } from "../styles/variable";
 import Input from "./Input";
 
 const SelectBox = ({

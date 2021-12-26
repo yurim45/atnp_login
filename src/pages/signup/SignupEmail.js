@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getEmail } from "../../common/data/signup/action";
 import styled from "styled-components";
-import ButtonBlue from "../../common/components/ButtonBlue";
-import ButtonWhite from "../../common/components/ButtonWhite";
-import Input from "../../common/components/Input";
+import ButtonBlue from "../../components/ButtonBlue";
+import ButtonWhite from "../../components/ButtonWhite";
+import Timer from "../../components/Timer";
+import Input from "../../components/Input";
 import { flexSet, description } from "../../styles/variable";
 
 const SignupEmail = ({
@@ -13,6 +16,8 @@ const SignupEmail = ({
   handleEmailSubmit,
   handleSubmit,
 }) => {
+  const dispatch = useDispatch();
+
   return (
     <SignupEmailForm>
       <div className='form'>
@@ -21,7 +26,8 @@ const SignupEmail = ({
             type='text'
             desc='이메일'
             name='email'
-            onChange={handleInputValue}
+            onChange={(target) => dispatch(getEmail(target))}
+            // onChange={handleInputValue}
             inputValue={email}
           />
           <ButtonWhite
@@ -46,7 +52,7 @@ const SignupEmail = ({
             />
             <ButtonBlue label={"인증완료"} onClick={handleSubmit} />
           </div>
-          <div className='timer'>0:00</div>
+          <Timer />
         </div>
       )}
     </SignupEmailForm>

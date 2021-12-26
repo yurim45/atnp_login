@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { btnBlueSet } from "../../styles/variable";
+import { btnGraySet } from "../styles/variable";
 
-const ButtonBlue = ({ label, onClick }) => {
+const ButtonGray = ({ label, onClick }) => {
   return <Btn onClick={onClick}>{label}</Btn>;
 };
 
-export default ButtonBlue;
+export default ButtonGray;
 
 const Btn = styled.button`
-  ${btnBlueSet};
+  ${btnGraySet};
 `;

@@ -3,9 +3,9 @@ import { getApi } from "../common/api/index";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import ButtonBlue from "../common/components/ButtonBlue";
-import ButtonWhite from "../common/components/ButtonWhite";
-import Input from "../common/components/Input";
+import ButtonBlue from "../components/ButtonBlue";
+import ButtonWhite from "../components/ButtonWhite";
+import Input from "../components/Input";
 import { flexSet, formSet, description } from "../styles/variable";
 
 const LOGIN_INFO = [

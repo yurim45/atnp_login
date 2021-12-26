@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { flexSet, description } from "../../styles/variable";
+import { flexSet, description } from "../styles/variable";
 
 const Page404 = ({}) => {
   return (
@@ -27,6 +27,9 @@ const Page404 = ({}) => {
 export default Page404;
 
 const Page = styled.section`
+  max-width: 1200px;
+  margin: auto;
+
   .title {
     padding: 30px;
 

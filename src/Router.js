@@ -1,7 +1,8 @@
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/signup/index";
-import Page404 from "./common/components/Page404";
+import Page404 from "./components/Page404";
 
 function Router() {
   return (

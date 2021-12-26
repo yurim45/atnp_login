@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { btnWhiteSet } from "../../styles/variable";
+import { btnWhiteSet } from "../styles/variable";
 
 const ButtonWhite = ({ label, onClick }) => {
   return <Btn onClick={onClick}>{label}</Btn>;

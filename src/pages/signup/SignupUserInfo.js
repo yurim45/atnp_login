@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  getName,
+  getOfficeNumber,
+  getAgency,
+  getPw,
+} from "../../common/data/signup/action";
 import styled from "styled-components";
-import { debounce } from "lodash";
-import ButtonBlue from "../../common/components/ButtonBlue";
-import Input from "../../common/components/Input";
-import SelectBox from "../../common/components/SelectBox";
+import ButtonBlue from "../../components/ButtonBlue";
+import Input from "../../components/Input";
+import SelectBox from "../../components/SelectBox";
 import { flexSet, formSet, description } from "../../styles/variable";
 
 const OFFICE_LIST = [
@@ -54,9 +60,12 @@ const SignupUserInfo = ({
   setSelectdValue,
   pwValid,
 }) => {
+  const dispatch = useDispatch();
+
   const autoPhoneNumber = (e) => {
     e.target.value = e.target.value.replace(/[^0-9]/, "");
     setOfficeNumber(e.target.value);
+    dispatch(getOfficeNumber(e.target));
   };
 
   return (
@@ -67,7 +76,7 @@ const SignupUserInfo = ({
           type='text'
           desc='이름'
           name='userName'
-          onChange={handleInputValue}
+          onChange={(target) => dispatch(getName(target))}
           inputValue={inputValue}
         />
         <SelectBox
@@ -77,14 +86,14 @@ const SignupUserInfo = ({
           list={OFFICE_LIST}
           inputValue={inputValue}
           onChange={handleInputValue}
-          selectdValue={selectdValue}
+          selectdValue={(target) => dispatch(getAgency(target))}
           setSelectdValue={setSelectdValue}
         />
         <Input
           type='text'
           desc='- 를 제외한 회사 전화번호'
           name='userPhone'
-          onChange={handleInputValue}
+          onChange={(target) => dispatch(getOfficeNumber(target))}
           autoPhoneNumber={autoPhoneNumber}
           inputValue={inputValue}
         />

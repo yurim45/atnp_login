@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { debounce } from "lodash";
 import { getApi } from "../../common/api/index";
@@ -7,6 +7,7 @@ import { flexSet, formSet } from "../../styles/variable";
 import SignupUserInfo from "./SignupUserInfo";
 import SignupEmail from "./SignupEmail";
 import SignupPhone from "./SignupPhone";
+import { useSelector } from "react-redux";
 
 const Signup = () => {
   const navigation = useNavigate();
@@ -25,6 +26,12 @@ const Signup = () => {
   const [checkpassword, setCheckPassword] = useState();
   const [pwValid, setPwValid] = useState(false);
   const [isUserInfo, setIsUserInfo] = useState(false);
+
+  const userInfos = useSelector((state) => state.userInfos);
+
+  useEffect(() => {
+    // console.log(userInfos);
+  }, [userInfos]);
 
   const handleInputValue = debounce((e) => {
     const { name, value } = e;
@@ -59,7 +66,7 @@ const Signup = () => {
 
   const handleEmailSubmit = async () => {
     const params = {
-      email,
+      email: userInfos.email,
     };
     try {
       const { status } = await getApi.post(`/email/code`, params);
@@ -75,8 +82,8 @@ const Signup = () => {
 
   const handlePhoneSubmit = async () => {
     const params = {
-      phoneNumber,
-      name: "사용자",
+      phoneNumber: userInfos.phoneNumber,
+      name: userInfos.name,
     };
     try {
       const { status } = await getApi.post(`/phone/code`, params);
@@ -97,7 +104,7 @@ const Signup = () => {
 
   const handleCertPhoneSubmit = async () => {
     const params = {
-      phoneNumber,
+      phoneNumber: userInfos.phoneNumber,
       code,
     };
     try {
@@ -107,14 +114,14 @@ const Signup = () => {
         setIsCertPhone(true);
       }
     } catch (error) {
-      console.warn();
+      console.warn(error);
       alert("휴대폰 인증이 실패했습니다.");
     }
   };
 
   const handleSubmit = async () => {
     const params = {
-      email,
+      email: userInfos.email,
       code,
     };
     try {
@@ -124,19 +131,19 @@ const Signup = () => {
         setIsCertEmail(false);
       }
     } catch (error) {
-      console.warn();
+      console.warn(error);
       alert("인증코드 이메일 발송 실패했습니다.");
     }
   };
 
   const handleSingup = async () => {
     const params = {
-      email,
-      pw: password,
-      name,
-      officeNumber,
-      agency: selectdValue,
-      phoneNumber,
+      email: userInfos.email,
+      pw: userInfos.pw,
+      name: userInfos.name,
+      officeNumber: userInfos.officeNumber,
+      agency: userInfos.agency,
+      phoneNumber: userInfos.phoneNumber,
     };
     try {
       const { status } = await getApi.post(`/register`, params);
@@ -146,7 +153,7 @@ const Signup = () => {
         navigation("/");
       }
     } catch (error) {
-      console.error();
+      console.error(error);
     }
   };
 
