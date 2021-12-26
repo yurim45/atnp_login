@@ -2,7 +2,16 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { flexSet } from "../../styles/variable";
 
-const Input = ({ type, desc, name, onChange, inputValue }) => {
+const Input = ({
+  type,
+  desc,
+  name,
+  onChange,
+  inputValue,
+  value,
+  autoPhoneNumber,
+  pwValid,
+}) => {
   const [notice, setNotice] = useState("");
 
   const isValid = () => {
@@ -23,21 +32,47 @@ const Input = ({ type, desc, name, onChange, inputValue }) => {
         } else {
           setNotice("");
         }
-      case "password":
+        break;
+      case "inputPassword":
         if (inputValue?.length < 1) {
           setNotice("비밀번호를 입력해주세요");
-          break;
+        } else if (inputValue?.length < 7) {
+          setNotice("비밀번호는 6자리 이상이어야 합니다");
+        } else {
+          setNotice("");
         }
-        return;
+        break;
+      case "Checkpassword":
+        console.lo(pwValid);
+        if (pwValid) {
+          setNotice("비밀번호가 일치하지 않습니다");
+        } else {
+          setNotice("");
+        }
+        break;
       case "code":
-        if (inputValue?.length < 1) {
+        if (inputValue?.length < 2) {
           setNotice("인증번호를 입력해주세요");
-          break;
         } else if (inputValue?.length !== 6) {
           setNotice("인증번호는 6글자 입니다");
-          break;
         }
+        break;
+      case "userName":
+        if (inputValue?.length < 2) {
+          setNotice("이름을 입력해주세요");
+        } else {
+          setNotice("");
+        }
+        break;
+      // case "userPhone":
+      //   if (inputValue?.length < 1) {
+      //     setNotice("인증번호를 입력해주세요");
+      //   } else if (inputValue?.length !== 6) {
+      //     setNotice("인증번호는 6글자 입니다");
+      //   }
+      //   break;
       default:
+        setNotice("");
         break;
     }
   };
@@ -46,17 +81,22 @@ const Input = ({ type, desc, name, onChange, inputValue }) => {
     if (inputValue) {
       isValid();
     }
-    console.log(inputValue);
   }, [inputValue]);
 
   return (
     <InputWrap>
       <input
         type={type}
+        value={value}
         placeholder={desc}
         name={name}
         onChange={(e) => {
-          onChange(e.target);
+          if (name == e.target.name) {
+            onChange(e.target);
+          }
+        }}
+        onInput={(e) => {
+          if (name == "userPhone") autoPhoneNumber(e);
         }}
       />
       <p className='notice'>{notice}</p>

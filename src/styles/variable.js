@@ -43,6 +43,18 @@ export const btnWhiteSet = () => css`
   color: ${({ theme }) => theme.colors.blue};
 `;
 
+export const btnGraySet = () => css`
+  font-size: 0.9rem;
+  font-weight: 700;
+  height: 54px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid ${({ theme }) => theme.colors.deepGray};
+  background-color: ${({ theme }) => theme.colors.deepGray};
+  color: ${({ theme }) => theme.colors.white};
+`;
+
 export const description = () => css`
   font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.deepGray};

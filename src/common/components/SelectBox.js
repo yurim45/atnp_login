@@ -1,20 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import styled from "styled-components";
 import { flexSet } from "../../styles/variable";
 import Input from "./Input";
 
-const SelectBox = ({ type, desc, name, list }) => {
-  const [drop, setDrop] = useState(true);
+const SelectBox = ({
+  type,
+  desc,
+  name,
+  list,
+  onChange,
+  inputValue,
+  selectdValue,
+  setSelectdValue,
+}) => {
+  const [drop, setDrop] = useState(false);
+  const [filteredList, setFilteredList] = useState(list);
+
+  const filterLists = () => {
+    if (inputValue) {
+      setFilteredList(list);
+      return;
+    }
+    const filterData = list.filter((el) => {
+      if (el.name.includes(inputValue)) {
+        return el;
+      }
+    });
+    setFilteredList(
+      filterData.length ? filterData : [{ id: 0, name: "no result" }]
+    );
+  };
+
+  useEffect(() => {
+    filterLists();
+  }, [inputValue]);
+
   return (
     <InputWrap onClick={() => setDrop(!drop)}>
-      <Input type={type} desc={desc} name={name} />
+      <Input
+        type={type}
+        desc={desc}
+        name={name}
+        onChange={onChange}
+        inputValue={inputValue}
+        value={selectdValue}
+      />
       <span className='arrow'>
         <i className='fas fa-chevron-down' />
       </span>
       {drop && (
         <ul className='dropList'>
-          {list?.map((el) => {
-            return <li key={el.id}>{el.name}</li>;
+          {filteredList?.map((el) => {
+            return (
+              <li
+                key={el.id}
+                className={
+                  el.id == 0
+                    ? "noList"
+                    : el.name === selectdValue
+                    ? "selected"
+                    : null
+                }
+                onClick={(e) => {
+                  setSelectdValue(e.target.innerText);
+                }}
+              >
+                {el.name}
+              </li>
+            );
           })}
         </ul>
       )}
@@ -50,7 +104,7 @@ const InputWrap = styled.div`
     position: absolute;
     top: 75px;
     width: 100%;
-    height: 250px;
+    max-height: 250px;
     padding: 5px 0;
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: 10px;
@@ -66,6 +120,15 @@ const InputWrap = styled.div`
       :hover {
         background-color: rgba(52, 93, 238, 0.2);
       }
+    }
+
+    .selected {
+      background-color: ${({ theme }) => theme.colors.blue};
+      color: ${({ theme }) => theme.colors.white};
+    }
+
+    .noList {
+      text-align: center;
     }
   }
 `;

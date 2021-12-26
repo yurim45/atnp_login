@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { getApi } from "../common/api/index";
+import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ButtonBlue from "../common/components/ButtonBlue";
@@ -23,6 +25,34 @@ const LOGIN_INFO = [
 
 const Login = () => {
   const navigation = useNavigate();
+  const [inputValue, setInputValue] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const handleInputValue = debounce((e) => {
+    const { name, value } = e;
+    setInputValue(value);
+    if (name == "email") {
+      setEmail(value);
+    } else if (name == "password") {
+      setPassword(value);
+    }
+  }, 200);
+
+  const handleLogin = async () => {
+    const params = {
+      email,
+      pw: password,
+    };
+    try {
+      const { status } = await getApi.post(`/login`, params);
+      if (status == 200) {
+        navigation("/page404");
+      }
+    } catch (error) {
+      console.error();
+    }
+  };
 
   return (
     <LoginForm>
@@ -33,7 +63,7 @@ const Login = () => {
               <h1>YETA 고객센터 로그인</h1>
               <p>로그인을 위해 아래의 정보를 입력해주세요</p>
             </div>
-            <form>
+            <div className='form'>
               {LOGIN_INFO?.map((info) => {
                 return (
                   <Input
@@ -41,19 +71,16 @@ const Login = () => {
                     type={info.type}
                     desc={info.desc}
                     name={info.name}
+                    inputValue={inputValue}
+                    onChange={handleInputValue}
                   />
                 );
               })}
               <footer>
-                <ButtonBlue
-                  label={"로그인"}
-                  onClick={() => {
-                    navigation("/login");
-                  }}
-                />
+                <ButtonBlue label={"로그인"} onClick={handleLogin} />
                 <div>또는</div>
               </footer>
-            </form>
+            </div>
             <ButtonWhite
               label={"회원가입"}
               onClick={() => {
@@ -101,7 +128,7 @@ const LoginForm = styled.section`
           }
         }
 
-        form {
+        .form {
           margin-top: 40px;
 
           footer {

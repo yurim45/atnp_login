@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { debounce } from "lodash";
 import ButtonBlue from "../../common/components/ButtonBlue";
 import Input from "../../common/components/Input";
 import SelectBox from "../../common/components/SelectBox";
 import { flexSet, formSet, description } from "../../styles/variable";
 
-const OFFICE_INFO = [
+const OFFICE_LIST = [
   {
     id: 1,
     name: "숙명여자대학교",
@@ -45,32 +45,72 @@ const OFFICE_INFO = [
   },
 ];
 
-const SignupUserInfo = () => {
-  const navigation = useNavigate();
-  const handleSubmit = () => {
-    console.log("=====완료");
-    navigation("/");
+const SignupUserInfo = ({
+  inputValue,
+  handleInputValue,
+  setOfficeNumber,
+  getUserInfo,
+  selectdValue,
+  setSelectdValue,
+  pwValid,
+}) => {
+  const autoPhoneNumber = (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/, "");
+    setOfficeNumber(e.target.value);
   };
 
   return (
     <SignupUserForm>
-      <form>
+      <div className='form'>
         <p>이름과 회사정보를 입력해주세요</p>
-        <Input type='text' desc='이름' name='userName' />
+        <Input
+          type='text'
+          desc='이름'
+          name='userName'
+          onChange={handleInputValue}
+          inputValue={inputValue}
+        />
         <SelectBox
           type='text'
           desc='회사를 선택해주세요.'
           name='userOffice'
-          list={OFFICE_INFO}
+          list={OFFICE_LIST}
+          inputValue={inputValue}
+          onChange={handleInputValue}
+          selectdValue={selectdValue}
+          setSelectdValue={setSelectdValue}
         />
-        <Input type='text' desc='- 를 제외한 회사 전화번호' name='userPhone' />
+        <Input
+          type='text'
+          desc='- 를 제외한 회사 전화번호'
+          name='userPhone'
+          onChange={handleInputValue}
+          autoPhoneNumber={autoPhoneNumber}
+          inputValue={inputValue}
+        />
         <p>
           사용할 비밀번호를 입력해주세요 (6글자 이상, 한글과 영문을 구분합니다.)
         </p>
-        <Input type='password' desc='비밀번호' name='password' />
-        <Input type='password' desc='비밀번호 확인' name='password' />
-        <ButtonBlue label={"완료"} onClick={handleSubmit} />
-      </form>
+        <Input
+          type='password'
+          desc='비밀번호'
+          name='inputPassword'
+          onChange={handleInputValue}
+        />
+        <Input
+          type='password'
+          desc='비밀번호 확인'
+          name='Checkpassword'
+          onChange={handleInputValue}
+          pwValid={pwValid}
+        />
+        <ButtonBlue
+          label={"완료"}
+          onClick={() => {
+            getUserInfo();
+          }}
+        />
+      </div>
     </SignupUserForm>
   );
 };
