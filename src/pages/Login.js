@@ -18,7 +18,7 @@ const LOGIN_INFO = [
   {
     id: 2,
     type: "password",
-    name: "password",
+    name: "inputPassword",
     desc: "비밀번호",
   },
 ];
