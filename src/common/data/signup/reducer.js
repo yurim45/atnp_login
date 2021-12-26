@@ -1,18 +1,12 @@
 import * as ActionTypes from "./actionTypes";
 
 const INITIAL_STATE = {
-  email: "aaa@gmail",
-  pw: "111111",
-  name: "사용자",
-  phoneNumber: "01022223333",
-  officeNumber: "07022223333",
-  agency: "한국과학기술연구원",
-  // email:  null,
-  // pw:  null,
-  // name: null,
-  // phoneNumber: null,
-  // officeNumber: null,
-  // agency: null,
+  email: null,
+  pw: null,
+  name: null,
+  phoneNumber: null,
+  officeNumber: null,
+  agency: null,
 };
 
 export const userInfos = (state = INITIAL_STATE, action) => {

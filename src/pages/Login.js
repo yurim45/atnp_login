@@ -12,13 +12,13 @@ const LOGIN_INFO = [
   {
     id: 1,
     type: "text",
-    name: "email",
+    name: "loginemail",
     desc: "이메일",
   },
   {
     id: 2,
     type: "password",
-    name: "inputPassword",
+    name: "password",
     desc: "비밀번호",
   },
 ];

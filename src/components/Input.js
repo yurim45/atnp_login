@@ -15,28 +15,32 @@ const Input = ({
 }) => {
   const [notice, setNotice] = useState("");
   const userInfos = useSelector((state) => state.userInfos);
+  console.log(userInfos);
 
-  console.log(inputValue, name);
+  const emailCheck = (value) => {
+    const result = String(value)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+    if (value?.length < 1) {
+      setNotice("이메일을 입력해주세요");
+    }
+    if (result == null) {
+      setNotice("올바른 이메일 형식이 아닙니다");
+    }
+    console.log("email", result, value);
+    setNotice("");
+  };
 
   const isValid = () => {
     switch (name) {
+      case "loginemail":
+        emailCheck(inputValue);
+        break;
       case "email":
         console.log("email", userInfos.email);
-        const check = String(userInfos.email)
-          .toLowerCase()
-          .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          );
-        if (userInfos.email?.length < 1) {
-          setNotice("이메일을 입력해주세요");
-          if (check == null) {
-            setNotice("올바른 이메일 형식이 아닙니다");
-            break;
-          } else {
-            setNotice("");
-            break;
-          }
-        }
+        emailCheck(userInfos.email);
         break;
       case "inputPassword":
         console.log("inputPassword", userInfos.pw);
@@ -52,7 +56,6 @@ const Input = ({
         }
         break;
       case "Checkpassword":
-        console.lo(pwValid);
         if (userInfos.pw !== inputValue) {
           setNotice("비밀번호가 일치하지 않습니다");
           break;
@@ -96,6 +99,7 @@ const Input = ({
 
   useEffect(() => {
     isValid();
+    console.log(inputValue, name, notice);
   }, [inputValue]);
 
   return (

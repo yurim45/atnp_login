@@ -30,7 +30,7 @@ const Signup = () => {
   const userInfos = useSelector((state) => state.userInfos);
 
   useEffect(() => {
-    // console.log(userInfos);
+    console.log(userInfos);
   }, [userInfos]);
 
   const handleInputValue = debounce((e) => {
@@ -147,7 +147,6 @@ const Signup = () => {
     };
     try {
       const { status } = await getApi.post(`/register`, params);
-      console.log(status);
       if (status == 200) {
         alert("회원가입이 완료되었습니다 🎉");
         navigation("/");
@@ -158,7 +157,6 @@ const Signup = () => {
   };
 
   const getUserInfo = () => {
-    console.log(isUserInfo);
     if (email && password && name && officeNumber && selectdValue) {
       setIsUserInfo(true);
     }
@@ -179,35 +177,35 @@ const Signup = () => {
                   : "핸드폰 번호 인증을 시작합니다"}
               </p>
             </div>
-            {isCertEmail ? (
-              <SignupEmail
-                email={email}
-                code={code}
-                isCertEmailCode={isCertEmailCode}
-                handleInputValue={handleInputValue}
-                handleEmailSubmit={handleEmailSubmit}
-                handleSubmit={handleSubmit}
-              />
-            ) : !isUserInfo ? (
-              <SignupUserInfo
-                selectdValue={selectdValue}
-                setSelectdValue={setSelectdValue}
-                handleInputValue={handleInputValue}
-                setOfficeNumber={setOfficeNumber}
-                getUserInfo={getUserInfo}
-                inputValue={inputValue}
-                pwValid={pwValid}
-              />
-            ) : (
-              <SignupPhone
-                isCertPhone={isCertPhone}
-                handlePhoneSubmit={handlePhoneSubmit}
-                handleCertPhoneSubmit={handleCertPhoneSubmit}
-                isCertPhoneCode={isCertPhoneCode}
-                handleInputValue={handleInputValue}
-                handleSingup={handleSingup}
-              />
-            )}
+            {/* {isCertEmail ? ( */}
+            <SignupEmail
+              email={email}
+              code={code}
+              isCertEmailCode={isCertEmailCode}
+              handleInputValue={handleInputValue}
+              handleEmailSubmit={handleEmailSubmit}
+              handleSubmit={handleSubmit}
+            />
+            {/* ) : !isUserInfo ? ( */}
+            <SignupUserInfo
+              selectdValue={selectdValue}
+              setSelectdValue={setSelectdValue}
+              handleInputValue={handleInputValue}
+              setOfficeNumber={setOfficeNumber}
+              getUserInfo={getUserInfo}
+              inputValue={inputValue}
+              pwValid={pwValid}
+            />
+            {/* ) : ( */}
+            <SignupPhone
+              isCertPhone={isCertPhone}
+              handlePhoneSubmit={handlePhoneSubmit}
+              handleCertPhoneSubmit={handleCertPhoneSubmit}
+              isCertPhoneCode={isCertPhoneCode}
+              handleInputValue={handleInputValue}
+              handleSingup={handleSingup}
+            />
+            {/* )} */}
           </div>
         </div>
       </main>
