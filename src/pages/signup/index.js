@@ -53,8 +53,6 @@ const Signup = () => {
     const params = {
       email: userInfos.email,
     };
-    // console.log('인증코드 이메일 발송', params);
-    // setIsCertEmailCode(true);
     try {
       const { status } = await getApi.post(`/email/code`, params);
       alert('인증코드 이메일 발송되었습니다.');
@@ -72,8 +70,6 @@ const Signup = () => {
       email: userInfos.email,
       code,
     };
-    // console.log('이메일 인증이 완료', params);
-    // setIsCertEmail(false);
     try {
       const { status } = await getApi.patch(`/email/code`, params);
       if (status == 200) {
@@ -91,8 +87,6 @@ const Signup = () => {
       phoneNumber: userInfos.phoneNumber,
       name: userInfos.name,
     };
-    // console.log('인증코드 휴대폰 발송', params);
-    // setIsCertPhoneCode(true);
     try {
       const { status } = await getApi.post(`/phone/code`, params);
       alert('인증코드 휴대폰 발송되었습니다.');
@@ -110,8 +104,6 @@ const Signup = () => {
       phoneNumber: userInfos.phoneNumber,
       code,
     };
-    // console.log('휴대폰 인증이 완료', params);
-    // setIsCertPhone(true);
     try {
       const { status } = await getApi.patch(`/phone/code`, params);
       if (status == 200) {
@@ -122,11 +114,6 @@ const Signup = () => {
       console.warn(error);
       alert('휴대폰 인증이 실패했습니다.');
     }
-    // const params = {
-    //   email: 'icho0405@naver.com',
-    // };
-    // const data = await getApi.delete(`/dev/user`, params);
-    // console.log(data);
   };
 
   const handleSingup = async () => {
@@ -139,9 +126,6 @@ const Signup = () => {
       agency,
       phoneNumber,
     };
-    // console.log('회원가입이 완료', params);
-    // navigation('/');
-    // dispatch(clear());
     try {
       const { status } = await getApi.post(`/register`, params);
       if (status == 200) {
@@ -156,7 +140,6 @@ const Signup = () => {
 
   const getUserInfo = () => {
     const { email, pw, name, officeNumber, agency } = userInfos;
-    console.log(email, pw, name, officeNumber, agency);
     if (!email || !pw || !name || !officeNumber || !agency) {
       setIsUserInfo(false);
       alert('정보를 모두 입력하세요');

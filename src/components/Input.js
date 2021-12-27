@@ -15,8 +15,6 @@ const Input = ({
   const [notice, setNotice] = useState('');
   const userInfos = useSelector((state) => state.userInfos);
 
-  // console.log('=========userInfos', userInfos);
-
   const emailCheck = (value) => {
     const result = String(value)
       .toLowerCase()
