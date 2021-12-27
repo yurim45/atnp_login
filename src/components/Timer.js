@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
-const Timer = () => {
-  const [mm, setMm] = useState(2);
-  const [ss, setSs] = useState(59);
+const Timer = ({ minute, second }) => {
+  const [mm, setMm] = useState(minute);
+  const [ss, setSs] = useState(second);
 
   useEffect(() => {
     const countdown = setInterval(() => {

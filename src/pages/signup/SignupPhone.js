@@ -38,7 +38,6 @@ const SignupPhone = ({
   };
 
   const phoneNumberCheck = (value) => {
-    console.log(!!value);
     const result = String(value)
       .toLowerCase()
       .match(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/);
@@ -102,7 +101,7 @@ const SignupPhone = ({
               <ButtonGray label={'인증완료'} />
             )}
           </div>
-          {!isCertPhone && <Timer />}
+          {!isCertPhone && <Timer minute={2} second={59} />}
         </div>
       )}
       <div className='btnWrap'>

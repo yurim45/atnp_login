@@ -94,7 +94,7 @@ const SignupEmail = ({
             />
             <ButtonBlue label={'인증완료'} onClick={handleSubmit} />
           </div>
-          <Timer />
+          <Timer minute={2} second={59} />
         </div>
       )}
     </SignupEmailForm>

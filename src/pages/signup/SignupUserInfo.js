@@ -11,45 +11,6 @@ import Input from '../../components/Input';
 import SelectBox from '../../components/SelectBox';
 import { description } from '../../styles/variable';
 
-const OFFICE_LIST = [
-  {
-    id: 1,
-    name: '숙명여자대학교',
-  },
-  {
-    id: 2,
-    name: '한국과학기술원',
-  },
-  {
-    id: 3,
-    name: '가천대학교',
-  },
-  {
-    id: 4,
-    name: '가천대학교산학협력단',
-  },
-  {
-    id: 5,
-    name: '가톨릭관동대학교',
-  },
-  {
-    id: 6,
-    name: '건국대글로벌',
-  },
-  {
-    id: 7,
-    name: '건국대산단',
-  },
-  {
-    id: 8,
-    name: '건국대학교',
-  },
-  {
-    id: 9,
-    name: '경희대학교',
-  },
-];
-
 const SignupUserInfo = ({
   inputValue,
   handleInputValue,
@@ -147,6 +108,45 @@ const SignupUserInfo = ({
 };
 
 export default SignupUserInfo;
+
+const OFFICE_LIST = [
+  {
+    id: 1,
+    name: '숙명여자대학교',
+  },
+  {
+    id: 2,
+    name: '한국과학기술원',
+  },
+  {
+    id: 3,
+    name: '가천대학교',
+  },
+  {
+    id: 4,
+    name: '가천대학교산학협력단',
+  },
+  {
+    id: 5,
+    name: '가톨릭관동대학교',
+  },
+  {
+    id: 6,
+    name: '건국대글로벌',
+  },
+  {
+    id: 7,
+    name: '건국대산단',
+  },
+  {
+    id: 8,
+    name: '건국대학교',
+  },
+  {
+    id: 9,
+    name: '경희대학교',
+  },
+];
 
 const SignupUserForm = styled.section`
   p {
