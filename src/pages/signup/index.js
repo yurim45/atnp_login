@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { clear } from '../../common/data/signup/action';
+import { clear, getPw } from '../../common/data/signup/action';
+import { getApi } from '../../common/api/index';
 import { debounce } from 'lodash';
 import styled from 'styled-components';
 import { flexSet, formSet } from '../../styles/variable';
@@ -19,7 +20,6 @@ const Signup = () => {
   const [code, setCode] = useState();
   const [password, setPassword] = useState();
   const [checkpassword, setCheckPassword] = useState();
-  const [pwValid, setPwValid] = useState(false);
   const [isUserInfo, setIsUserInfo] = useState(false);
 
   const userInfos = useSelector((state) => state.userInfos);
@@ -33,35 +33,38 @@ const Signup = () => {
         setCode(value);
         break;
       case 'inputPassword':
-        console.log('inputPassword', value);
         setPassword(value);
         break;
       case 'checkedpassword':
-        console.log('checkedpassword', value);
         setCheckPassword(value);
-        setPwValid(password === checkpassword ? true : false);
         break;
       default:
         break;
     }
   }, 200);
 
+  useEffect(() => {
+    if (password === checkpassword) {
+      dispatch(getPw(password));
+    }
+  }, [password, checkpassword]);
+
   const handleEmailSubmit = async () => {
     const params = {
       email: userInfos.email,
     };
-    console.log('인증코드 이메일 발송', params);
-    setIsCertEmailCode(true);
-    // try {
-    //   const { status } = await getApi.post(`/email/code`, params);
-    //   alert('인증코드 이메일 발송되었습니다.');
-    //   if (status == 200) {
-    //     setIsCertEmailCode(true);
-    //   }
-    // } catch (error) {
-    //   console.warn(error);
-    //   alert('인증코드 이메일 발송 실패했습니다.');
-    // }
+    // console.log('인증코드 이메일 발송', params);
+    // setIsCertEmailCode(true);
+    try {
+      const { status } = await getApi.post(`/email/code`, params);
+      alert('인증코드 이메일 발송되었습니다.');
+      if (status == 200) {
+        setIsCertEmailCode(true);
+      }
+    } catch (error) {
+      console.warn(error);
+      alert('인증코드 이메일 발송 실패했습니다.');
+    }
   };
 
   const handleSubmit = async () => {
@@ -69,18 +72,18 @@ const Signup = () => {
       email: userInfos.email,
       code,
     };
-    console.log('이메일 인증이 완료', params);
-    setIsCertEmail(false);
-    // try {
-    //   const { status } = await getApi.patch(`/email/code`, params);
-    //   if (status == 200) {
-    //     alert('이메일 인증이 완료되었습니다.');
-    //     setIsCertEmail(false);
-    //   }
-    // } catch (error) {
-    //   console.warn(error);
-    //   alert('인증코드 이메일 발송 실패했습니다.');
-    // }
+    // console.log('이메일 인증이 완료', params);
+    // setIsCertEmail(false);
+    try {
+      const { status } = await getApi.patch(`/email/code`, params);
+      if (status == 200) {
+        alert('이메일 인증이 완료되었습니다.');
+        setIsCertEmail(false);
+      }
+    } catch (error) {
+      console.warn(error);
+      alert('인증코드 이메일 발송 실패했습니다.');
+    }
   };
 
   const handlePhoneSubmit = async () => {
@@ -88,23 +91,18 @@ const Signup = () => {
       phoneNumber: userInfos.phoneNumber,
       name: userInfos.name,
     };
-    console.log('인증코드 휴대폰 발송', params);
-    setIsCertPhoneCode(true);
-    // try {
-    //   const { status } = await getApi.post(`/phone/code`, params);
-    //   alert('인증코드 휴대폰 발송되었습니다.');
-    //   if (status == 200) {
-    //     setIsCertPhoneCode(true);
-    //   }
-    // } catch (error) {
-    //   console.warn(error);
-    //   alert('인증코드 휴대폰 발송 실패했습니다.');
-    // }
-    // const params = {
-    //   email: "icho0405@naver.com",
-    // };
-    // const data = await getApi.delete(`/dev/user`, params);
-    // console.log(data);
+    // console.log('인증코드 휴대폰 발송', params);
+    // setIsCertPhoneCode(true);
+    try {
+      const { status } = await getApi.post(`/phone/code`, params);
+      alert('인증코드 휴대폰 발송되었습니다.');
+      if (status == 200) {
+        setIsCertPhoneCode(true);
+      }
+    } catch (error) {
+      console.warn(error);
+      alert('인증코드 휴대폰 발송 실패했습니다.');
+    }
   };
 
   const handleCertPhoneSubmit = async () => {
@@ -112,46 +110,53 @@ const Signup = () => {
       phoneNumber: userInfos.phoneNumber,
       code,
     };
-    console.log('휴대폰 인증이 완료', params);
-    setIsCertPhone(true);
-    // try {
-    //   const { status } = await getApi.patch(`/phone/code`, params);
-    //   if (status == 200) {
-    //     alert('휴대폰 인증이 완료되었습니다.');
-    //     setIsCertPhoneCode(true);
-    //   }
-    // } catch (error) {
-    //   console.warn(error);
-    //   alert('휴대폰 인증이 실패했습니다.');
-    // }
+    // console.log('휴대폰 인증이 완료', params);
+    // setIsCertPhone(true);
+    try {
+      const { status } = await getApi.patch(`/phone/code`, params);
+      if (status == 200) {
+        alert('휴대폰 인증이 완료되었습니다.');
+        setIsCertPhoneCode(true);
+      }
+    } catch (error) {
+      console.warn(error);
+      alert('휴대폰 인증이 실패했습니다.');
+    }
+    // const params = {
+    //   email: 'icho0405@naver.com',
+    // };
+    // const data = await getApi.delete(`/dev/user`, params);
+    // console.log(data);
   };
 
   const handleSingup = async () => {
+    const { email, pw, name, officeNumber, agency, phoneNumber } = userInfos;
     const params = {
-      email: userInfos.email,
-      pw: userInfos.pw,
-      name: userInfos.name,
-      officeNumber: userInfos.officeNumber,
-      agency: userInfos.agency,
-      phoneNumber: userInfos.phoneNumber,
+      email,
+      pw,
+      name,
+      officeNumber,
+      agency,
+      phoneNumber,
     };
-    console.log('회원가입이 완료', params);
-    navigation('/');
-    dispatch(clear());
-    // try {
-    //   const { status } = await getApi.post(`/register`, params);
-    //   if (status == 200) {
-    //     alert('회원가입이 완료되었습니다 🎉');
-    //     navigation('/');
-    //     dispatch(clear());
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    // console.log('회원가입이 완료', params);
+    // navigation('/');
+    // dispatch(clear());
+    try {
+      const { status } = await getApi.post(`/register`, params);
+      if (status == 200) {
+        alert('회원가입이 완료되었습니다 🎉');
+        navigation('/');
+        dispatch(clear());
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getUserInfo = () => {
     const { email, pw, name, officeNumber, agency } = userInfos;
+    console.log(email, pw, name, officeNumber, agency);
     if (!email || !pw || !name || !officeNumber || !agency) {
       setIsUserInfo(false);
       alert('정보를 모두 입력하세요');

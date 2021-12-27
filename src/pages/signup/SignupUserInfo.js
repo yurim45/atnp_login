@@ -69,7 +69,7 @@ const SignupUserInfo = ({ inputValue, handleInputValue, getUserInfo }) => {
           desc='이름'
           name='userName'
           onChange={(target) => dispatch(getName(target))}
-          inputValue={inputValue}
+          inputValue={userInfos?.name}
         />
         <SelectBox
           type='text'
@@ -84,7 +84,7 @@ const SignupUserInfo = ({ inputValue, handleInputValue, getUserInfo }) => {
         <Input
           type='text'
           desc='- 를 제외한 회사 전화번호'
-          name='userPhone'
+          name='userOfficeNumber'
           onChange={(target) => dispatch(getOfficeNumber(target))}
           autoPhoneNumber={autoPhoneNumber}
           inputValue={inputValue}
@@ -97,12 +97,16 @@ const SignupUserInfo = ({ inputValue, handleInputValue, getUserInfo }) => {
           desc='비밀번호'
           name='inputPassword'
           onChange={handleInputValue}
+          inputValue={inputValue}
+          // onChange={(target) => dispatch(getPw(target))}
         />
         <Input
           type='password'
           desc='비밀번호 확인'
           name='checkedpassword'
-          onChange={(target) => dispatch(getPw(target))}
+          onChange={handleInputValue}
+          inputValue={inputValue}
+          // onChange={(target) => dispatch(getPw(target))}
         />
         <ButtonBlue label={'완료'} onClick={getUserInfo} />
       </div>

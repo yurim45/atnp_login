@@ -14,7 +14,7 @@ export const getPhone = (target) => {
 
 export const getPw = (target) => {
   return (dispatch) => {
-    dispatch({ type: ActionTypes.USER_PW, data: target.value });
+    dispatch({ type: ActionTypes.USER_PW, data: target });
   };
 };
 

@@ -1,27 +1,12 @@
-import React, { useState } from "react";
-import { getApi } from "../common/api/index";
-import { debounce } from "lodash";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import ButtonBlue from "../components/ButtonBlue";
-import ButtonWhite from "../components/ButtonWhite";
-import Input from "../components/Input";
-import { flexSet, formSet, description } from "../styles/variable";
-
-const LOGIN_INFO = [
-  {
-    id: 1,
-    type: "text",
-    name: "loginemail",
-    desc: "이메일",
-  },
-  {
-    id: 2,
-    type: "password",
-    name: "password",
-    desc: "비밀번호",
-  },
-];
+import React, { useState } from 'react';
+import { getApi } from '../common/api/index';
+import { debounce } from 'lodash';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import ButtonBlue from '../components/ButtonBlue';
+import ButtonWhite from '../components/ButtonWhite';
+import Input from '../components/Input';
+import { flexSet, formSet, description } from '../styles/variable';
 
 const Login = () => {
   const navigation = useNavigate();
@@ -32,9 +17,9 @@ const Login = () => {
   const handleInputValue = debounce((e) => {
     const { name, value } = e;
     setInputValue(value);
-    if (name == "email") {
+    if (name == 'loginemail') {
       setEmail(value);
-    } else if (name == "password") {
+    } else if (name == 'password') {
       setPassword(value);
     }
   }, 200);
@@ -47,10 +32,10 @@ const Login = () => {
     try {
       const { status } = await getApi.post(`/login`, params);
       if (status == 200) {
-        navigation("/page404");
+        navigation('/page404');
       }
     } catch (error) {
-      console.error();
+      console.error(error);
     }
   };
 
@@ -64,27 +49,29 @@ const Login = () => {
               <p>로그인을 위해 아래의 정보를 입력해주세요</p>
             </div>
             <div className='form'>
-              {LOGIN_INFO?.map((info) => {
-                return (
-                  <Input
-                    key={info.id}
-                    type={info.type}
-                    desc={info.desc}
-                    name={info.name}
-                    inputValue={inputValue}
-                    onChange={handleInputValue}
-                  />
-                );
-              })}
+              <Input
+                type='text'
+                desc='이메일'
+                name='loginemail'
+                inputValue={email}
+                onChange={handleInputValue}
+              />
+              <Input
+                type='password'
+                desc='비밀번호'
+                name='password'
+                inputValue={password}
+                onChange={handleInputValue}
+              />
               <footer>
-                <ButtonBlue label={"로그인"} onClick={handleLogin} />
+                <ButtonBlue label={'로그인'} onClick={handleLogin} />
                 <div>또는</div>
               </footer>
             </div>
             <ButtonWhite
-              label={"회원가입"}
+              label={'회원가입'}
               onClick={() => {
-                navigation("/signup");
+                navigation('/signup');
               }}
             />
           </div>
@@ -97,7 +84,7 @@ const Login = () => {
 export default Login;
 
 const LoginForm = styled.section`
-  ${flexSet("center", "center")};
+  ${flexSet('center', 'center')};
   background-color: ${({ theme }) => theme.colors.lightGray};
 
   main {
@@ -105,7 +92,7 @@ const LoginForm = styled.section`
     height: 100vh;
 
     .wrap {
-      ${flexSet("center", "center")};
+      ${flexSet('center', 'center')};
       height: 100%;
 
       .loginBox {
@@ -135,7 +122,7 @@ const LoginForm = styled.section`
             margin-top: 36px;
 
             div {
-              ${flexSet("center", "center")};
+              ${flexSet('center', 'center')};
               margin-top: 15px;
               margin-bottom: 10px;
               font-size: 0.9rem;
