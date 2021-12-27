@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPhone } from '../../common/data/signup/action';
 import styled from 'styled-components';
@@ -20,6 +20,50 @@ const SignupPhone = ({
 }) => {
   const dispatch = useDispatch();
   const userInfos = useSelector((state) => state.userInfos);
+  const [codeNotice, setCodeNotice] = useState('');
+  const [phoneNotice, setPhoneNotice] = useState('');
+
+  const codeCheck = () => {
+    if (!!code) {
+      if (code?.length < 2) {
+        setCodeNotice('인증번호를 입력해주세요');
+      } else if (code?.length !== 6) {
+        setCodeNotice('인증번호는 6글자 입니다');
+      } else {
+        setCodeNotice('');
+      }
+    } else {
+      setCodeNotice('');
+    }
+  };
+
+  const phoneNumberCheck = (value) => {
+    console.log(!!value);
+    const result = String(value)
+      .toLowerCase()
+      .match(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/);
+    if (!!value) {
+      if (value?.length < 1) {
+        setPhoneNotice('휴대폰 번호를 입력해주세요');
+      } else if (result == null) {
+        setPhoneNotice('올바른 휴대폰 번호가 아닙니다');
+      } else {
+        setPhoneNotice('');
+      }
+    } else {
+      setPhoneNotice('');
+    }
+  };
+
+  const autoPhoneNumber = (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/, '');
+    dispatch(getPhone(e.target));
+  };
+
+  useEffect(() => {
+    codeCheck();
+    phoneNumberCheck(userInfos?.phoneNumber);
+  }, [code, userInfos?.phoneNumber]);
 
   return (
     <SignupEmailForm>
@@ -31,6 +75,8 @@ const SignupPhone = ({
             name='phone'
             onChange={(target) => dispatch(getPhone(target))}
             inputValue={userInfos?.phoneNumber}
+            autoPhoneNumber={autoPhoneNumber}
+            notice={phoneNotice}
           />
           <ButtonWhite
             label={isCertPhoneCode ? '재전송' : '전송'}
@@ -48,6 +94,7 @@ const SignupPhone = ({
               name='code'
               onChange={handleInputValue}
               inputValue={code}
+              notice={codeNotice}
             />
             {!isCertPhone ? (
               <ButtonBlue label={'인증완료'} onClick={handleCertPhoneSubmit} />

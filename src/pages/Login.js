@@ -10,17 +10,48 @@ import { flexSet, formSet, description } from '../styles/variable';
 
 const Login = () => {
   const navigation = useNavigate();
-  const [inputValue, setInputValue] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [emailNotice, setEmailNotice] = useState('');
+  const [pwNotice, setPwNotice] = useState('');
+
+  const emailCheck = (value) => {
+    const result = String(value)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+    if (value !== undefined) {
+      if (value?.length < 1) {
+        setEmailNotice('이메일을 입력해주세요');
+      } else if (value?.length > 1 && result == null) {
+        setEmailNotice('올바른 이메일 형식이 아닙니다');
+      } else {
+        setEmailNotice('');
+      }
+    } else {
+      setEmailNotice('');
+    }
+  };
+
+  const pwCheck = (value) => {
+    if (value !== undefined) {
+      if (value?.length < 1) {
+        setPwNotice('비밀번호를 입력해주세요');
+      }
+    } else {
+      setPwNotice('');
+    }
+  };
 
   const handleInputValue = debounce((e) => {
     const { name, value } = e;
-    setInputValue(value);
     if (name == 'loginemail') {
       setEmail(value);
+      emailCheck(value);
     } else if (name == 'password') {
       setPassword(value);
+      pwCheck(value);
     }
   }, 200);
 
@@ -55,6 +86,7 @@ const Login = () => {
                 name='loginemail'
                 inputValue={email}
                 onChange={handleInputValue}
+                notice={emailNotice}
               />
               <Input
                 type='password'
@@ -62,6 +94,7 @@ const Login = () => {
                 name='password'
                 inputValue={password}
                 onChange={handleInputValue}
+                notice={pwNotice}
               />
               <footer>
                 <ButtonBlue label={'로그인'} onClick={handleLogin} />

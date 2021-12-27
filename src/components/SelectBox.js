@@ -15,9 +15,20 @@ const SelectBox = ({
 }) => {
   const [drop, setDrop] = useState(false);
   const [filteredList, setFilteredList] = useState(list);
+  const [notice, setNotice] = useState('');
+
+  const valueCheck = () => {
+    if (value !== null) {
+      if (value?.length < 1) {
+        setNotice(desc);
+      }
+    } else {
+      setNotice('');
+    }
+  };
 
   const filterLists = () => {
-    if (inputValue) {
+    if (!inputValue) {
       setFilteredList(list);
       return;
     }
@@ -33,7 +44,8 @@ const SelectBox = ({
 
   useEffect(() => {
     filterLists();
-  }, [inputValue]);
+    valueCheck();
+  }, [inputValue, value]);
 
   return (
     <InputWrap onClick={() => setDrop(!drop)}>
@@ -44,6 +56,7 @@ const SelectBox = ({
         onChange={onChange}
         inputValue={inputValue}
         value={value}
+        notice={notice}
       />
       <span className='arrow'>
         <i className='fas fa-chevron-down' />

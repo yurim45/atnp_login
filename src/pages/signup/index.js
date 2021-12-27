@@ -21,6 +21,7 @@ const Signup = () => {
   const [password, setPassword] = useState();
   const [checkpassword, setCheckPassword] = useState();
   const [isUserInfo, setIsUserInfo] = useState(false);
+  const [checkPwNotice, setCheckPwNotice] = useState();
 
   const userInfos = useSelector((state) => state.userInfos);
   const dispatch = useDispatch();
@@ -46,105 +47,108 @@ const Signup = () => {
   useEffect(() => {
     if (password === checkpassword) {
       dispatch(getPw(password));
+      setCheckPwNotice('');
+    } else if (checkpassword?.length > 1 && password !== checkpassword) {
+      setCheckPwNotice('비밀번호가 일치하지 않습니다.');
     }
   }, [password, checkpassword]);
 
   const handleEmailSubmit = async () => {
-    const params = {
-      email: userInfos.email,
-    };
-    try {
-      const { status } = await getApi.post(`/email/code`, params);
-      alert('인증코드 이메일 발송되었습니다.');
-      if (status == 200) {
-        setIsCertEmailCode(true);
-      }
-    } catch (error) {
-      console.warn(error);
-      alert('인증코드 이메일 발송 실패했습니다.');
-    }
+    // const params = {
+    //   email: userInfos.email,
+    // };
+    // try {
+    //   const { status } = await getApi.post(`/email/code`, params);
+    //   alert('인증코드 이메일 발송되었습니다.');
+    //   if (status == 200) {
+    setIsCertEmailCode(true);
+    //   }
+    // } catch (error) {
+    //   console.warn(error);
+    //   alert('인증코드 이메일 발송 실패했습니다.');
+    // }
   };
 
   const handleSubmit = async () => {
-    const params = {
-      email: userInfos.email,
-      code,
-    };
-    try {
-      const { status } = await getApi.patch(`/email/code`, params);
-      if (status == 200) {
-        alert('이메일 인증이 완료되었습니다.');
-        setIsCertEmail(false);
-      }
-    } catch (error) {
-      console.warn(error);
-      alert('인증코드 이메일 발송 실패했습니다.');
-    }
+    // const params = {
+    //   email: userInfos.email,
+    //   code,
+    // };
+    // try {
+    //   const { status } = await getApi.patch(`/email/code`, params);
+    //   if (status == 200) {
+    //     alert('이메일 인증이 완료되었습니다.');
+    setIsCertEmail(false);
+    //   }
+    // } catch (error) {
+    //   console.warn(error);
+    //   alert('인증코드 이메일 발송 실패했습니다.');
+    // }
   };
 
   const handlePhoneSubmit = async () => {
-    const params = {
-      phoneNumber: userInfos.phoneNumber,
-      name: userInfos.name,
-    };
-    try {
-      const { status } = await getApi.post(`/phone/code`, params);
-      alert('인증코드 휴대폰 발송되었습니다.');
-      if (status == 200) {
-        setIsCertPhoneCode(true);
-      }
-    } catch (error) {
-      console.warn(error);
-      alert('인증코드 휴대폰 발송 실패했습니다.');
-    }
+    // const params = {
+    //   phoneNumber: userInfos.phoneNumber,
+    //   name: userInfos.name,
+    // };
+    // try {
+    //   const { status } = await getApi.post(`/phone/code`, params);
+    //   alert('인증코드 휴대폰 발송되었습니다.');
+    //   if (status == 200) {
+    setIsCertPhoneCode(true);
+    //   }
+    // } catch (error) {
+    //   console.warn(error);
+    //   alert('인증코드 휴대폰 발송 실패했습니다.');
+    // }
   };
 
   const handleCertPhoneSubmit = async () => {
-    const params = {
-      phoneNumber: userInfos.phoneNumber,
-      code,
-    };
-    try {
-      const { status } = await getApi.patch(`/phone/code`, params);
-      if (status == 200) {
-        alert('휴대폰 인증이 완료되었습니다.');
-        setIsCertPhoneCode(true);
-      }
-    } catch (error) {
-      console.warn(error);
-      alert('휴대폰 인증이 실패했습니다.');
-    }
+    // const params = {
+    //   phoneNumber: userInfos.phoneNumber,
+    //   code,
+    // };
+    // try {
+    //   const { status } = await getApi.patch(`/phone/code`, params);
+    //   if (status == 200) {
+    //     alert('휴대폰 인증이 완료되었습니다.');
+    setIsCertPhoneCode(true);
+    //   }
+    // } catch (error) {
+    //   console.warn(error);
+    //   alert('휴대폰 인증이 실패했습니다.');
+    // }
   };
 
   const handleSingup = async () => {
-    const { email, pw, name, officeNumber, agency, phoneNumber } = userInfos;
-    const params = {
-      email,
-      pw,
-      name,
-      officeNumber,
-      agency,
-      phoneNumber,
-    };
-    try {
-      const { status } = await getApi.post(`/register`, params);
-      if (status == 200) {
-        alert('회원가입이 완료되었습니다 🎉');
-        navigation('/');
-        dispatch(clear());
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    // const { email, pw, name, officeNumber, agency, phoneNumber } = userInfos;
+    // const params = {
+    //   email,
+    //   pw,
+    //   name,
+    //   officeNumber,
+    //   agency,
+    //   phoneNumber,
+    // };
+    // try {
+    //   const { status } = await getApi.post(`/register`, params);
+    //   if (status == 200) {
+    // alert('회원가입이 완료되었습니다 🎉');
+    navigation('/');
+    //     dispatch(clear());
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   const getUserInfo = () => {
-    const { email, pw, name, officeNumber, agency } = userInfos;
-    if (!email || !pw || !name || !officeNumber || !agency) {
-      setIsUserInfo(false);
-      alert('정보를 모두 입력하세요');
-      return;
-    }
+    // const { email, pw, name, officeNumber, agency } = userInfos;
+    // if (!email || !pw || !name || !officeNumber || !agency) {
+    //   setIsUserInfo(false);
+    //   alert('정보를 모두 입력하세요');
+    //   return;
+    // }
     setIsUserInfo(true);
   };
 
@@ -166,6 +170,7 @@ const Signup = () => {
             {isCertEmail ? (
               <SignupEmail
                 code={code}
+                inputValue={inputValue}
                 isCertEmailCode={isCertEmailCode}
                 handleInputValue={handleInputValue}
                 handleEmailSubmit={handleEmailSubmit}
@@ -176,6 +181,7 @@ const Signup = () => {
                 inputValue={inputValue}
                 handleInputValue={handleInputValue}
                 getUserInfo={getUserInfo}
+                checkPwNotice={checkPwNotice}
               />
             ) : (
               <SignupPhone
