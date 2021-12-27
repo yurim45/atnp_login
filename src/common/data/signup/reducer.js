@@ -1,4 +1,4 @@
-import * as ActionTypes from "./actionTypes";
+import * as ActionTypes from './actionTypes';
 
 const INITIAL_STATE = {
   email: null,
@@ -14,34 +14,35 @@ export const userInfos = (state = INITIAL_STATE, action) => {
     case ActionTypes.USER_EMAIL:
       return {
         ...state,
-        email: state.data,
+        email: action.data,
       };
-      break;
     case ActionTypes.USER_PHONE:
       return {
         ...state,
-        phoneNumber: state.data,
+        phoneNumber: action.data,
       };
     case ActionTypes.USER_PW:
       return {
         ...state,
-        pw: state.data,
+        pw: action.data,
       };
     case ActionTypes.USER_NAME:
       return {
         ...state,
-        name: state.data,
+        name: action.data,
       };
     case ActionTypes.USER_OFFICE_NUMBER:
       return {
         ...state,
-        officeNumber: state.data,
+        officeNumber: action.data,
       };
     case ActionTypes.USER_AGENCY:
       return {
         ...state,
-        agency: state.data,
+        agency: action.data,
       };
+    case ActionTypes.CLEAR:
+      return INITIAL_STATE;
     default:
       return state;
   }

@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { flexSet, description } from "../styles/variable";
+import React from 'react';
+import styled from 'styled-components';
+import { flexSet } from '../styles/variable';
 
 const Page404 = ({}) => {
   return (
@@ -45,7 +45,7 @@ const Page = styled.section`
     }
   }
   main {
-    ${flexSet("center", "center", "column")}
+    ${flexSet('center', 'center', 'column')}
 
     img {
       width: 325px;

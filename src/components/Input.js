@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { flexSet } from "../styles/variable";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { flexSet } from '../styles/variable';
+import { useSelector } from 'react-redux';
 
 const Input = ({
   type,
@@ -11,95 +11,91 @@ const Input = ({
   inputValue,
   value,
   autoPhoneNumber,
-  pwValid,
 }) => {
-  const [notice, setNotice] = useState("");
+  const [notice, setNotice] = useState('');
   const userInfos = useSelector((state) => state.userInfos);
-  console.log(userInfos);
 
   const emailCheck = (value) => {
-    const result = String(value)
+    console.log(value);
+    const result = String(value?.input)
       .toLowerCase()
       .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
     if (value?.length < 1) {
-      setNotice("이메일을 입력해주세요");
+      setNotice('이메일을 입력해주세요');
     }
     if (result == null) {
-      setNotice("올바른 이메일 형식이 아닙니다");
+      setNotice('올바른 이메일 형식이 아닙니다');
     }
-    console.log("email", result, value);
-    setNotice("");
+    setNotice('');
   };
 
   const isValid = () => {
     switch (name) {
-      case "loginemail":
+      case 'loginemail':
         emailCheck(inputValue);
         break;
-      case "email":
-        console.log("email", userInfos.email);
+      case 'email':
         emailCheck(userInfos.email);
         break;
-      case "inputPassword":
-        console.log("inputPassword", userInfos.pw);
+      case 'inputPassword':
         if (!userInfos.pw?.length < 1) {
-          setNotice("비밀번호를 입력해주세요");
+          setNotice('비밀번호를 입력해주세요');
           break;
         } else if (userInfos.pw?.length < 7) {
-          setNotice("비밀번호는 6자리 이상이어야 합니다");
+          setNotice('비밀번호는 6자리 이상이어야 합니다');
           break;
         } else {
-          setNotice("");
+          setNotice('');
           break;
         }
         break;
-      case "Checkpassword":
+      case 'checkedpassword':
         if (userInfos.pw !== inputValue) {
-          setNotice("비밀번호가 일치하지 않습니다");
+          setNotice('비밀번호가 일치하지 않습니다');
           break;
         } else {
-          setNotice("");
+          setNotice('');
           break;
         }
         break;
-      case "code":
+      case 'code':
         if (inputValue?.length < 1) {
-          setNotice("인증번호를 입력해주세요");
+          setNotice('인증번호를 입력해주세요');
           break;
         } else if (inputValue?.length !== 6) {
-          setNotice("인증번호는 6글자 입니다");
+          setNotice('인증번호는 6글자 입니다');
           break;
         }
         break;
-      case "userName":
+      case 'userName':
         if (userInfos.name?.length < 1) {
-          setNotice("이름을 입력해주세요");
+          setNotice('이름을 입력해주세요');
           break;
         } else {
-          setNotice("");
+          setNotice('');
           break;
         }
         break;
-      case "userPhone":
+      case 'userPhone':
         if (userInfos.phoneNumber?.length < 1) {
-          setNotice("인증번호를 입력해주세요");
+          setNotice('인증번호를 입력해주세요');
           break;
         } else if (inputValue?.length !== 6) {
-          setNotice("인증번호는 6글자 입니다");
+          setNotice('인증번호는 6글자 입니다');
           break;
         }
         break;
       default:
-        setNotice("");
+        setNotice('');
         break;
     }
   };
 
   useEffect(() => {
     isValid();
-    console.log(inputValue, name, notice);
+    // console.log(inputValue, name, notice);
   }, [inputValue]);
 
   return (
@@ -115,7 +111,7 @@ const Input = ({
           }
         }}
         onInput={(e) => {
-          if (name == "userPhone") autoPhoneNumber(e);
+          if (name == 'userPhone') autoPhoneNumber(e);
         }}
       />
       <p className='notice'>{notice}</p>
@@ -126,7 +122,7 @@ const Input = ({
 export default Input;
 
 const InputWrap = styled.div`
-  ${flexSet("center", "center")};
+  ${flexSet('center', 'center')};
   position: relative;
   margin: 16px 0px;
   width: 100%;

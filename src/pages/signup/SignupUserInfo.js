@@ -1,70 +1,62 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getName,
   getOfficeNumber,
   getAgency,
   getPw,
-} from "../../common/data/signup/action";
-import styled from "styled-components";
-import ButtonBlue from "../../components/ButtonBlue";
-import Input from "../../components/Input";
-import SelectBox from "../../components/SelectBox";
-import { flexSet, formSet, description } from "../../styles/variable";
+} from '../../common/data/signup/action';
+import styled from 'styled-components';
+import ButtonBlue from '../../components/ButtonBlue';
+import Input from '../../components/Input';
+import SelectBox from '../../components/SelectBox';
+import { description } from '../../styles/variable';
 
 const OFFICE_LIST = [
   {
     id: 1,
-    name: "숙명여자대학교",
+    name: '숙명여자대학교',
   },
   {
     id: 2,
-    name: "한국과학기술원",
+    name: '한국과학기술원',
   },
   {
     id: 3,
-    name: "가천대학교",
+    name: '가천대학교',
   },
   {
     id: 4,
-    name: "가천대학교산학협력단",
+    name: '가천대학교산학협력단',
   },
   {
     id: 5,
-    name: "가톨릭관동대학교",
+    name: '가톨릭관동대학교',
   },
   {
     id: 6,
-    name: "건국대글로벌",
+    name: '건국대글로벌',
   },
   {
     id: 7,
-    name: "건국대산단",
+    name: '건국대산단',
   },
   {
     id: 8,
-    name: "건국대학교",
+    name: '건국대학교',
   },
   {
     id: 9,
-    name: "경희대학교",
+    name: '경희대학교',
   },
 ];
 
-const SignupUserInfo = ({
-  inputValue,
-  handleInputValue,
-  setOfficeNumber,
-  getUserInfo,
-  selectdValue,
-  setSelectdValue,
-  pwValid,
-}) => {
+const SignupUserInfo = ({ inputValue, handleInputValue, getUserInfo }) => {
   const dispatch = useDispatch();
+  const userInfos = useSelector((state) => state.userInfos);
 
   const autoPhoneNumber = (e) => {
-    e.target.value = e.target.value.replace(/[^0-9]/, "");
-    setOfficeNumber(e.target.value);
+    e.target.value = e.target.value.replace(/[^0-9]/, '');
     dispatch(getOfficeNumber(e.target));
   };
 
@@ -86,8 +78,8 @@ const SignupUserInfo = ({
           list={OFFICE_LIST}
           inputValue={inputValue}
           onChange={handleInputValue}
-          selectdValue={(target) => dispatch(getAgency(target))}
-          setSelectdValue={setSelectdValue}
+          onClick={(target) => dispatch(getAgency(target))}
+          value={userInfos?.agency}
         />
         <Input
           type='text'
@@ -109,16 +101,10 @@ const SignupUserInfo = ({
         <Input
           type='password'
           desc='비밀번호 확인'
-          name='Checkpassword'
-          onChange={handleInputValue}
-          pwValid={pwValid}
+          name='checkedpassword'
+          onChange={(target) => dispatch(getPw(target))}
         />
-        <ButtonBlue
-          label={"완료"}
-          onClick={() => {
-            getUserInfo();
-          }}
-        />
+        <ButtonBlue label={'완료'} onClick={getUserInfo} />
       </div>
     </SignupUserForm>
   );

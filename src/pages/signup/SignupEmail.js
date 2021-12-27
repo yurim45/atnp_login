@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { getEmail } from "../../common/data/signup/action";
-import styled from "styled-components";
-import ButtonBlue from "../../components/ButtonBlue";
-import ButtonWhite from "../../components/ButtonWhite";
-import Timer from "../../components/Timer";
-import Input from "../../components/Input";
-import { flexSet, description } from "../../styles/variable";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEmail } from '../../common/data/signup/action';
+import styled from 'styled-components';
+import ButtonBlue from '../../components/ButtonBlue';
+import ButtonWhite from '../../components/ButtonWhite';
+import Timer from '../../components/Timer';
+import Input from '../../components/Input';
+import { flexSet, description } from '../../styles/variable';
 
 const SignupEmail = ({
-  email,
   code,
   isCertEmailCode,
   handleInputValue,
@@ -17,6 +16,7 @@ const SignupEmail = ({
   handleSubmit,
 }) => {
   const dispatch = useDispatch();
+  const userInfos = useSelector((state) => state.userInfos);
 
   return (
     <SignupEmailForm>
@@ -27,11 +27,10 @@ const SignupEmail = ({
             desc='이메일'
             name='email'
             onChange={(target) => dispatch(getEmail(target))}
-            // onChange={handleInputValue}
-            inputValue={email}
+            inputValue={userInfos?.email}
           />
           <ButtonWhite
-            label={isCertEmailCode ? "재전송" : "전송"}
+            label={isCertEmailCode ? '재전송' : '전송'}
             onClick={handleEmailSubmit}
           />
         </div>
@@ -50,7 +49,7 @@ const SignupEmail = ({
               onChange={handleInputValue}
               inputValue={code}
             />
-            <ButtonBlue label={"인증완료"} onClick={handleSubmit} />
+            <ButtonBlue label={'인증완료'} onClick={handleSubmit} />
           </div>
           <Timer />
         </div>
@@ -64,7 +63,7 @@ export default SignupEmail;
 const SignupEmailForm = styled.section`
   .form {
     .emailWrap {
-      ${flexSet("center", "center")};
+      ${flexSet('center', 'center')};
       gap: 12px;
 
       button {

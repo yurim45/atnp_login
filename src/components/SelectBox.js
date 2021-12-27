@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-
-import styled from "styled-components";
-import { flexSet } from "../styles/variable";
-import Input from "./Input";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { flexSet } from '../styles/variable';
+import Input from './Input';
 
 const SelectBox = ({
   type,
@@ -10,9 +9,9 @@ const SelectBox = ({
   name,
   list,
   onChange,
+  value,
   inputValue,
-  selectdValue,
-  setSelectdValue,
+  onClick,
 }) => {
   const [drop, setDrop] = useState(false);
   const [filteredList, setFilteredList] = useState(list);
@@ -28,7 +27,7 @@ const SelectBox = ({
       }
     });
     setFilteredList(
-      filterData.length ? filterData : [{ id: 0, name: "no result" }]
+      filterData.length ? filterData : [{ id: 0, name: 'no result' }]
     );
   };
 
@@ -44,7 +43,7 @@ const SelectBox = ({
         name={name}
         onChange={onChange}
         inputValue={inputValue}
-        value={selectdValue}
+        value={value}
       />
       <span className='arrow'>
         <i className='fas fa-chevron-down' />
@@ -56,15 +55,9 @@ const SelectBox = ({
               <li
                 key={el.id}
                 className={
-                  el.id == 0
-                    ? "noList"
-                    : el.name === selectdValue
-                    ? "selected"
-                    : null
+                  el.id == 0 ? 'noList' : el.name === value ? 'selected' : null
                 }
-                onClick={(e) => {
-                  setSelectdValue(e.target.innerText);
-                }}
+                onClick={(e) => onClick(e.target.innerText)}
               >
                 {el.name}
               </li>
@@ -79,7 +72,7 @@ const SelectBox = ({
 export default SelectBox;
 
 const InputWrap = styled.div`
-  ${flexSet("center", "center")};
+  ${flexSet('center', 'center')};
   position: relative;
   margin: 16px 0px;
   width: 100%;
