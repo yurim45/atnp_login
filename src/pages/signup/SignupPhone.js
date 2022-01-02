@@ -44,7 +44,7 @@ const SignupPhone = ({
     if (!!value) {
       if (value?.length < 1) {
         setPhoneNotice('휴대폰 번호를 입력해주세요');
-      } else if (result == null) {
+      } else if (result === null) {
         setPhoneNotice('올바른 휴대폰 번호가 아닙니다');
       } else {
         setPhoneNotice('');

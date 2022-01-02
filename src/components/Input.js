@@ -19,11 +19,13 @@ const Input = ({
         placeholder={desc}
         name={name}
         onChange={(e) => {
-          if (name == e.target.name) {
+          // focus를 잃은 순간 작동
+          if (name === e.target.name) {
             onChange(e.target);
           }
         }}
         onInput={(e) => {
+          // 사용자가 입력할 때 마다 바로바로 데이터 확인
           if (autoPhoneNumber) autoPhoneNumber(e);
         }}
       />

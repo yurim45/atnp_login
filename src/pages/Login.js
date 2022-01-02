@@ -46,10 +46,10 @@ const Login = () => {
 
   const handleInputValue = debounce((e) => {
     const { name, value } = e;
-    if (name == 'loginemail') {
+    if (name === 'loginemail') {
       setEmail(value);
       emailCheck(value);
-    } else if (name == 'password') {
+    } else if (name === 'password') {
       setPassword(value);
       pwCheck(value);
     }
